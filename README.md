@@ -151,11 +151,27 @@ Here's some ideas on what you can do with neovim integration:
 
 ### Key Remapping
 
-Custom remappings are defined on a per-mode basis.
+Custom remappings are defined on a per-mode basis. These are the keybinding overrides to use for insert, normal, operatorPending and visual modes:
 
 #### `"vim.insertModeKeyBindings"`/`"vim.normalModeKeyBindings"`/`"vim.visualModeKeyBindings"`/`"vim.operatorPendingModeKeyBindings"`
 
-- Keybinding overrides to use for insert, normal, operatorPending and visual modes.
+- `"before"` is the key sequence used to trigger the shortcut
+- `"after"` are the vim actions to execute (optional)
+- `"commands"` are any VSCode commands to execute (optional)
+
+#### Special key combinations
+
+`Ctrl` and `Shift` key combinations can be remapped easily using this syntax (key can be anything here):
+
+| Key Combination | Key binding |
+| --------------- | ----------- |
+| Ctrl+key        | `"<C-key>"` |
+| Shift+key       | `"<S-key>"` |
+
+Other keys like `Alt` or more complex key combinations like `Ctrl+Shift+key` need to be rebound using OTHER_COMMIT_I_MADE
+
+#### Key Remapping Examples
+
 - Bind `jj` to `<Esc>` in insert mode:
 
 ```json
