@@ -159,7 +159,30 @@ Custom remappings are defined on a per-mode basis. These are the keybinding over
 - `"after"` are the vim actions to execute (optional)
 - `"commands"` are any VSCode commands to execute (optional)
 
-#### Special key combinations
+#### Special keys and combinations
+
+Here is a list of special keys used by VSCodeVim:
+
+| Special key | Key binding |
+| ----------- | ----------- |
+| Tab         | `"Tab"`     |
+| Down-arrow  | `"Down"`    |
+| Left-arrow  | `"Left"`    |
+| Right-arrow | `"Right"`   |
+| Up-arrow    | `"Up"`      |
+| Enter       | `"Enter"`   |
+| Escape      | `"<Esc>"`   |
+| Spacebar    | `" "`       |
+| Leader      | `"leader"`  |
+
+A `"leader"` key is often used in vim to add as a prefix for various keyboard shortcuts ([for more info](https://learnvimscriptthehardway.stevelosh.com/chapters/06.html)). It just becomes another key available for keybindings. For example one might add the following remapping to redo the last undone action (`"<C-r>"` by default in vim):
+
+```json
+{
+  "before": ["leader", "U"],
+  "after": ["<C-r>"]
+}
+```
 
 `Ctrl` and `Shift` key combinations can be remapped easily using this syntax (key can be anything here):
 
