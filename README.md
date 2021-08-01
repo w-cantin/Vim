@@ -155,11 +155,15 @@ Custom remappings are defined on a per-mode basis. These are the keybinding over
 
 #### `"vim.insertModeKeyBindings"`/`"vim.normalModeKeyBindings"`/`"vim.visualModeKeyBindings"`/`"vim.operatorPendingModeKeyBindings"`
 
-- `"before"` is the key sequence used to trigger the shortcut
-- `"after"` are the vim actions to execute (optional)
-- `"commands"` are any VSCode commands to execute (optional)
+Each key remap entry is a JSON object containing at least 2 of the 3 following attributes:
 
-#### Special keys and combinations
+- `"before"` is an array containing the key sequence used to trigger the shortcut
+- `"after"` is an array containing the vim actions to execute (optional)
+- `"commands"` is an array containing any VSCode commands to execute (optional)
+
+For practical examples see [Key Remapping Examples](#key-remapping-examples)
+
+#### Special keys
 
 Here is a list of special keys used by VSCodeVim:
 
@@ -183,6 +187,8 @@ A `"leader"` key is often used in vim to add as a prefix for various keyboard sh
   "after": ["<C-r>"]
 }
 ```
+
+#### Special Key Combinations
 
 `Ctrl` and `Shift` key combinations can be remapped easily using this syntax (key can be anything here):
 
