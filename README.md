@@ -62,7 +62,15 @@ We also recommend increasing Key Repeat and Delay Until Repeat settings in _Syst
 
 ### Windows
 
-Like real vim, VSCodeVim will take over your control keys. This behaviour can be adjusted with the [`useCtrlKeys`](#vscodevim-settings) and [`handleKeys`](#vscodevim-settings) settings.
+Like real vim, VSCodeVim will take over your control keys. This behaviour can be adjusted with the [`useCtrlKeys`](#vscodevim-settings) and [`handleKeys`](#vscodevim-settings) settings. For example to enable `Ctrl` keys in VSCodeVim but keep native VSCode's `Ctrl-c` and `Ctrl-v` behavior it is possible to use the following settings:
+
+```json
+  "vim.useCtrlKeys": true,
+  "vim.handleKeys": {
+    "<C-c>": false,
+    "<C-v>": false,
+  },
+```
 
 ## ⚙️ Settings
 
@@ -153,7 +161,10 @@ Here's some ideas on what you can do with neovim integration:
 
 Custom remappings are defined on a per-mode basis. These are the keybinding overrides to use for insert, normal, operatorPending and visual modes:
 
-#### `"vim.insertModeKeyBindings"`/`"vim.normalModeKeyBindings"`/`"vim.visualModeKeyBindings"`/`"vim.operatorPendingModeKeyBindings"`
+- `"vim.insertModeKeyBindings"`
+- `"vim.normalModeKeyBindings"`
+- `"vim.visualModeKeyBindings"`
+- `"vim.operatorPendingModeKeyBindings"`
 
 Each key remap entry is a JSON object containing at least 2 of the 3 following attributes:
 
@@ -162,6 +173,59 @@ Each key remap entry is a JSON object containing at least 2 of the 3 following a
 - `"commands"` is an array containing any VSCode commands to execute (optional)
 
 For practical examples see [Key Remapping Examples](#key-remapping-examples)
+
+#### Non-recursive keybindings
+
+- `"vim.insertModeKeyBindingsNonRecursive"`
+- `"normalModeKeyBindingsNonRecursive"`
+- `"visualModeKeyBindingsNonRecursive"`
+- `"operatorPendingModeKeyBindingsNonRecursive"`
+
+Non-recursive keybinding overrides to use for insert, normal, and visual modes
+
+- _Example:_ Exchange the meaning of two keys like `j` to `k` and `k` to `j` to exchange the cursor up and down commands. Notice that if you attempted this binding normally, the `j` would be replaced with `k` and the `k` would be replaced with `j`, on and on forever. When this happens 'maxmapdepth' times (default 1000) the error message 'E223 Recursive Mapping' will be thrown. Stop this recursive expansion using the NonRecursive variation of the keybindings.
+
+```json
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["j"],
+            "after": ["k"]
+        },
+        {
+            "before": ["k"],
+            "after": ["j"]
+        }
+    ]
+```
+
+- Bind `(` to 'i(' in operator pending mode makes 'y(' and 'c(' work like 'yi(' and 'ci(' respectively.
+
+```json
+    "vim.operatorPendingModeKeyBindingsNonRecursive": [
+        {
+            "before": ["("],
+            "after": ["i("]
+        }
+    ]
+```
+
+- Bind `p` in visual mode to paste without overriding the current register
+
+```json
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "p",
+            ],
+            "after": [
+                "p",
+                "g",
+                "v",
+                "y"
+            ]
+        }
+    ],
+```
 
 #### Special keys
 
@@ -339,53 +403,6 @@ Other keys like `Alt` or more complex key combinations like `Ctrl+Shift+key` nee
             ]
         }
     ]
-```
-
-#### `"vim.insertModeKeyBindingsNonRecursive"`/`"normalModeKeyBindingsNonRecursive"`/`"visualModeKeyBindingsNonRecursive"`/`"operatorPendingModeKeyBindingsNonRecursive"`
-
-- Non-recursive keybinding overrides to use for insert, normal, and visual modes
-- _Example:_ Exchange the meaning of two keys like `j` to `k` and `k` to `j` to exchange the cursor up and down commands. Notice that if you attempted this binding normally, the `j` would be replaced with `k` and the `k` would be replaced with `j`, on and on forever. When this happens 'maxmapdepth' times (default 1000) the error message 'E223 Recursive Mapping' will be thrown. Stop this recursive expansion using the NonRecursive variation of the keybindings.
-
-```json
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": ["j"],
-            "after": ["k"]
-        },
-        {
-            "before": ["k"],
-            "after": ["j"]
-        }
-    ]
-```
-
-- Bind `(` to 'i(' in operator pending mode makes 'y(' and 'c(' work like 'yi(' and 'ci(' respectively.
-
-```json
-    "vim.operatorPendingModeKeyBindingsNonRecursive": [
-        {
-            "before": ["("],
-            "after": ["i("]
-        }
-    ]
-```
-
-- Bind `p` in visual mode to paste without overriding the current register
-
-```json
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "p",
-            ],
-            "after": [
-                "p",
-                "g",
-                "v",
-                "y"
-            ]
-        }
-    ],
 ```
 
 #### Debugging Remappings
