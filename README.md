@@ -231,17 +231,17 @@ _Example:_ Exchange the meaning of two keys like `j` to `k` and `k` to `j` to ex
 
 Here is a list of special keys used by VSCodeVim:
 
-| Special key | Key binding |
-| ----------- | ----------- |
-| Tab         | `"Tab"`     |
-| Down-arrow  | `"Down"`    |
-| Left-arrow  | `"Left"`    |
-| Right-arrow | `"Right"`   |
-| Up-arrow    | `"Up"`      |
-| Enter       | `"Enter"`   |
-| Escape      | `"<Esc>"`   |
-| Spacebar    | `" "`       |
-| Leader      | `"leader"`  |
+    | Special key | Key binding |
+    | ----------- | ----------- |
+    | Tab         | `"Tab"`     |
+    | Down-arrow  | `"Down"`    |
+    | Left-arrow  | `"Left"`    |
+    | Right-arrow | `"Right"`   |
+    | Up-arrow    | `"Up"`      |
+    | Enter       | `"Enter"`   |
+    | Escape      | `"<Esc>"`   |
+    | Spacebar    | `" "`       |
+    | Leader      | `"leader"`  |
 
 A `"leader"` key is often used in vim to add as a prefix for various keyboard shortcuts ([for more info](https://learnvimscriptthehardway.stevelosh.com/chapters/06.html)). It just becomes another key available for keybindings. For example one might add the following remapping to redo the last undone action (`"<C-r>"` by default in vim):
 
@@ -256,10 +256,10 @@ A `"leader"` key is often used in vim to add as a prefix for various keyboard sh
 
 `Ctrl` and `Shift` key combinations can be remapped easily using this syntax (key can be anything here):
 
-| Key Combination | Key binding |
-| --------------- | ----------- |
-| Ctrl+key        | `"<C-key>"` |
-| Shift+key       | `"<S-key>"` |
+    | Key Combination | Key binding |
+    | --------------- | ----------- |
+    | Ctrl+key        | `"<C-key>"` |
+    | Shift+key       | `"<S-key>"` |
 
 Other keys like `Alt` or more complex key combinations like `Ctrl+Shift+key` need to be rebound using OTHER_COMMIT_I_MADE
 
