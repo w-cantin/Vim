@@ -183,7 +183,7 @@ The following keybindings prohibit infinite loops caused by recursive remappings
 - `"visualModeKeyBindingsNonRecursive"`
 - `"operatorPendingModeKeyBindingsNonRecursive"`
 
-- _Example:_ Exchange the meaning of two keys like `j` to `k` and `k` to `j` to exchange the cursor up and down commands. Notice that if you attempted this binding normally, the `j` would be replaced with `k` and the `k` would be replaced with `j`, on and on forever. When this happens 'maxmapdepth' times (default 1000) the error message 'E223 Recursive Mapping' will be thrown. Stop this recursive expansion using the NonRecursive variation of the keybindings.
+_Example:_ Exchange the meaning of two keys like `j` to `k` and `k` to `j` to exchange the cursor up and down commands. Notice that if you attempted this binding normally, the `j` would be replaced with `k` and the `k` would be replaced with `j`, on and on forever. When this happens 'maxmapdepth' times (default 1000) the error message 'E223 Recursive Mapping' will be thrown. Stop this recursive expansion using the NonRecursive variation of the keybindings.
 
 ```json
     "vim.normalModeKeyBindingsNonRecursive": [
