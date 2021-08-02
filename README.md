@@ -174,7 +174,9 @@ Each key remap entry is a JSON object containing at least 2 of the 3 following a
 
 For practical examples see [Key Remapping Examples](#key-remapping-examples)
 
-Non-recursive keybindings overrides to use for insert, normal, and visual modes
+#### Non-recursive keybindings
+
+The following keybindings prohibit infinite loops caused by recursive remappings ([for more info](https://learnvimscriptthehardway.stevelosh.com/chapters/05.html)):
 
 - `"vim.insertModeKeyBindingsNonRecursive"`
 - `"normalModeKeyBindingsNonRecursive"`
