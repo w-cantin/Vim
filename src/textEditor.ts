@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as error from '../src/error';
 
 import { configuration } from './configuration/configuration';
 import { VimState } from './state/vimState';
@@ -265,6 +266,33 @@ export class TextEditor {
       start = start.nextWordStart(document);
       wordEnd = start.nextWordEnd(document, { inclusive: true });
     } while (true);
+  }
+
+  /**
+   * This function requests the list of symbols parsed by the VSCodeSymbol
+   * provider and returns it. Most LSPs should be working out of the box.
+   * A way to check for correct support is to see if VSCode's breadcrumbs
+   * work properly. If they do then requestSymbols should work too.
+   *
+   * See breadcrumbs documentation: https://code.visualstudio.com/updates/v1_26#_breadcrumbs
+   *
+   * Throws an error if no symbols were found.
+   *
+   * @param document, the current document to be parsed.
+   * @returns the list of symbols found for the present document
+   */
+  public static async getSymbols(document: vscode.TextDocument) {
+    const uri = document.uri;
+    const symbols = await vscode.commands.executeCommand<vscode.DocumentSymbol[]>(
+      'vscode.executeDocumentSymbolProvider',
+      uri
+    );
+
+    if (symbols === undefined) {
+      throw error.VimError.fromCode(error.ErrorCode.SymbolProviderNotFound);
+    }
+
+    return symbols;
   }
 }
 

@@ -17,6 +17,7 @@ import { IKeyRemapping } from '../configuration/iconfiguration';
 import { SurroundState } from '../actions/plugins/surround';
 import { SUPPORT_NVIM, SUPPORT_IME_SWITCHER } from 'platform/constants';
 import { Position } from 'vscode';
+import { TextEditor } from '../textEditor';
 import { CommandLine } from '../cmd_line/commandLine';
 
 interface IInputMethodSwitcher {
@@ -315,11 +316,42 @@ export class VimState implements vscode.Disposable {
 
   public nvim?: INVim;
 
+  /**
+   * This variable acts as a cache for DocumentSymbols provided by the LSP using the
+   * vscode.executeDocumentSymbolProvider command. If the version number changes then the
+   * symbols are probably outdated and the lsp should provide a new up to date version of
+   * the symbols.
+   */
+  private _documentSymbols: { version: number | null; symbols: vscode.DocumentSymbol[] };
+
+  /**
+   * This function returns the latest DocumentSymbols parsed by the LSP. We cache the result
+   * until the next document change.
+   *
+   * @returns symbols, the DocumentSymbols parsed by the LSP
+   */
+  public async requestDocumentSymbols(): Promise<vscode.DocumentSymbol[]> {
+    const version = this.editor.document.version;
+
+    let symbols: vscode.DocumentSymbol[] = [];
+
+    // Cache the symbols provided by vscode's LSP and update if the document changes
+    if (version !== this._documentSymbols.version) {
+      symbols = await TextEditor.getSymbols(this.document);
+      this._documentSymbols = { version, symbols };
+    } else {
+      symbols = this._documentSymbols.symbols;
+    }
+
+    return symbols;
+  }
+
   public constructor(editor: vscode.TextEditor, easyMotion: IEasyMotion) {
     this.editor = editor;
     this.identity = EditorIdentity.fromEditor(editor);
     this.historyTracker = new HistoryTracker(this);
     this.easyMotion = easyMotion;
+    this._documentSymbols = { version: null, symbols: [] };
   }
 
   async load() {
