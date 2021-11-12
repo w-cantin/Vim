@@ -1,10 +1,10 @@
 {
-  "name": "vim",
-  "displayName": "Vim",
-  "description": "Vim emulation for Visual Studio Code",
+  "name": "vscodevim-sneak-fork",
+  "displayName": "vscodevim-sneak-fork",
+  "description": "Temporary fork of VSCodeVim that implements sneak and treesitter-like text objects",
   "icon": "images/icon.png",
   "version": "1.21.10",
-  "publisher": "vscodevim",
+  "publisher": "vscodevim-sneak-fork",
   "galleryBanner": {
     "color": "#e3f4ff",
     "theme": "light"
@@ -17,9 +17,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/VSCodeVim/Vim.git"
+    "url": "https://github.com/w-cantin/Vim.git"
   },
-  "homepage": "https://github.com/VSCodeVim/Vim",
+  "homepage": "https://github.com/w-cantin/Vim",
   "bugs": {
     "url": "https://github.com/VSCodeVim/Vim/issues"
   },
