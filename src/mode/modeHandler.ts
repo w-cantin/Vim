@@ -608,7 +608,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
     recordedState.actionsRunPressedKeys.push(...recordedState.actionKeys);
 
     let actionToRecord: BaseAction | undefined = action;
-    this.vimState.lastRecognizedAction = actionToRecord;
+    this.vimState.sneak.lastRecognizedAction = actionToRecord;
 
     if (recordedState.actionsRun.length === 0) {
       recordedState.actionsRun.push(action);
@@ -1571,11 +1571,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
       this.vimState.easyMotion.updateDecorations(this.vimState.editor);
     }
 
-    if (this.vimState.sneak) {
-      if (this.vimState.sneak.isHighlightingOn()) {
-        this.vimState.sneak.updateDecorations(this.vimState.lastRecognizedAction);
-      }
-    }
+    this.vimState.sneak.clearSneakIfApplicable(this.vimState);
 
     StatusBar.clear(this.vimState, false);
 
