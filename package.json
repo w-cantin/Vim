@@ -3,7 +3,7 @@
   "displayName": "vscodevim-sneak-fork",
   "description": "Temporary fork of VSCodeVim that implements sneak and treesitter-like text objects",
   "icon": "images/icon.png",
-  "version": "1.21.10",
+  "version": "1.21.11",
   "publisher": "vscodevim-sneak-fork",
   "galleryBanner": {
     "color": "#e3f4ff",
