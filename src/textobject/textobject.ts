@@ -1043,7 +1043,7 @@ export abstract class InnerSymbol extends TextObject {
 
     const symbols = await vimState.requestDocumentSymbols();
 
-    const searchResult = AstHelper.searchSymbolContainingPos(symbols, vimState.cursorStartPosition);
+    const searchResult = AstHelper.searchSymbolContainingPos(symbols, position);
 
     const whitelistedSymbol = searchResult.searchUpward(this.whitelist);
 
@@ -1069,7 +1069,7 @@ export abstract class InnerSymbol extends TextObject {
     }
 
     // We are looking backward so revert
-    if (vimState.cursorStartPosition.isAfter(vimState.cursorStopPosition)) {
+    if (vimState.cursorStartPosition.isAfter(position)) {
       const temp = start;
       start = stop;
       stop = temp;
