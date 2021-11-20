@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { SymbolKind } from 'vscode';
 import * as SymbolSearch from './symbolSearchResult';
 
 /**
@@ -6,6 +7,14 @@ import * as SymbolSearch from './symbolSearchResult';
  * navigation.
  */
 export class AstHelper {
+  static WHITELIST_CLASS = Object.freeze(
+    new Set([SymbolKind.Class, SymbolKind.Struct, SymbolKind.Enum, SymbolKind.Interface])
+  );
+
+  static WHITELIST_FUNCTION = Object.freeze(
+    new Set([SymbolKind.Function, SymbolKind.Method, SymbolKind.Constructor])
+  );
+
   /**
    * Searches a list of symbols and their descendants to find the deepest symbol
    * containing a position. The search might not necessarily find a symbol so

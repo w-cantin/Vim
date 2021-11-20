@@ -805,7 +805,7 @@ class MoveToColumn extends BaseMovement {
  * @param count number of times to look
  * @param direction direction to look in
  */
-function findHelper(
+export function findHelper(
   vimState: VimState,
   start: Position,
   char: string,

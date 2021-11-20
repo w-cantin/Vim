@@ -21,6 +21,8 @@ import { getCurrentParagraphBeginning, getCurrentParagraphEnd } from './paragrap
 import { DocumentSymbol, Position, SymbolKind, TextDocument } from 'vscode';
 import { WordType } from './word';
 import { AstHelper } from '../ast/astHelper';
+import { PairMatcher } from '../common/matching/matcher';
+import { findHelper } from '../actions/motion';
 
 export abstract class TextObject extends BaseMovement {
   override modes = [Mode.Normal, Mode.Visual, Mode.VisualBlock];
@@ -1023,16 +1025,69 @@ abstract class SelectASymbol extends TextObject {
 @RegisterAction
 export class SelectAFunctionSymbol extends SelectASymbol {
   override keys = ['a', 'F'];
-  override whitelist = new Set([SymbolKind.Function, SymbolKind.Method, SymbolKind.Constructor]);
+  override whitelist = AstHelper.WHITELIST_FUNCTION;
 }
 
 @RegisterAction
 export class SelectAClassSymbol extends SelectASymbol {
   override keys = ['a', 'C'];
-  override whitelist = new Set([
-    SymbolKind.Class,
-    SymbolKind.Struct,
-    SymbolKind.Enum,
-    SymbolKind.Interface,
-  ]);
+  override whitelist = AstHelper.WHITELIST_CLASS;
+}
+
+export abstract class InnerSymbol extends TextObject {
+  abstract whitelist: Set<SymbolKind>;
+
+  public override async execAction(position: Position, vimState: VimState): Promise<IMovement> {
+    let start: Position;
+    let stop: Position;
+
+    const symbols = await vimState.requestDocumentSymbols();
+
+    const searchResult = AstHelper.searchSymbolContainingPos(symbols, vimState.cursorStartPosition);
+
+    const whitelistedSymbol = searchResult.searchUpward(this.whitelist);
+
+    if (!whitelistedSymbol || !whitelistedSymbol.symbol) {
+      return failedMovement(vimState);
+    }
+
+    const endPos = whitelistedSymbol.symbol.range.end;
+
+    const toFind = '}';
+    const lastBracketPos = findHelper(vimState, endPos, toFind, 1, 'backward');
+
+    if (lastBracketPos) {
+      const firstBracketPos = PairMatcher.nextPairedChar(lastBracketPos, '}', vimState, true);
+      if (firstBracketPos) {
+        start = firstBracketPos.getRightThroughLineBreaks();
+        stop = lastBracketPos.getLeftThroughLineBreaks();
+      } else {
+        return failedMovement(vimState);
+      }
+    } else {
+      return failedMovement(vimState);
+    }
+
+    // We are looking backward so revert
+    if (vimState.cursorStartPosition.isAfter(vimState.cursorStopPosition)) {
+      const temp = start;
+      start = stop;
+      stop = temp;
+    }
+
+    return { start, stop };
+  }
+}
+@RegisterAction
+export class InnerFunction extends InnerSymbol {
+  override keys = ['i', 'f'];
+
+  override whitelist = AstHelper.WHITELIST_FUNCTION;
+}
+
+@RegisterAction
+export class InnerClass extends InnerSymbol {
+  override keys = ['i', 'c'];
+
+  override whitelist = AstHelper.WHITELIST_CLASS;
 }
