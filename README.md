@@ -1,10 +1,14 @@
-<h2 align="center"><img src="https://raw.githubusercontent.com/VSCodeVim/Vim/master/images/icon.png" height="128"><br>VSCodeVim</h2>
-<p align="center"><strong>Vim emulation for Visual Studio Code</strong></p>
+<h2 align="center"><img src="https://raw.githubusercontent.com/VSCodeVim/Vim/master/images/icon.png" height="128"><br>VSCodeVim-Sneak-Fork</h2>
+<p align="center"><strong>Temporary fork of VSCodeVim implementing Sneak plugin</strong></p>
 
 [![](https://vsmarketplacebadge.apphb.com/version/vscodevim.vim.svg)](http://aka.ms/vscodevim)
 [![](https://vsmarketplacebadge.apphb.com/installs-short/vscodevim.vim.svg)](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)
 [![](https://github.com/VSCodeVim/Vim/workflows/build/badge.svg?branch=master)](https://github.com/VSCodeVim/Vim/actions?query=workflow%3Abuild+branch%3Amaster)
 [![](https://img.shields.io/badge/vscodevim-slack-blue.svg?logo=slack)](https://vscodevim.herokuapp.com/)
+
+VSCodeVim-Sneak-Fork is a temporary fork for the official [VSCodeVim extension](https://github.com/VSCodeVim/Vim). This can be used temporarily while the feature is being added in the main extension (see the Pull Request progress [here](https://github.com/VSCodeVim/Vim/pull/7162)).
+
+VSCodeVim-Sneak-Fork aims to emulate the wonderful vim plugin called [Sneak](https://github.com/justinmk/vim-sneak) in VSCodeVim. Sneak allows for easier text navigation by adding labels to easily jump between locations.   
 
 VSCodeVim is a Vim emulator for [Visual Studio Code](https://code.visualstudio.com/).
 
@@ -44,7 +48,7 @@ VSCodeVim is a Vim emulator for [Visual Studio Code](https://code.visualstudio.c
 
 ## 💾 Installation
 
-VSCodeVim is automatically enabled following [installation](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) and reloading of VS Code.
+VSCodeVim is automatically enabled following [installation](https://marketplace.visualstudio.com/items?itemName=vscodevim-sneak-fork.vscodevim-sneak-fork) and reloading of VS Code.
 
 ### Mac
 
